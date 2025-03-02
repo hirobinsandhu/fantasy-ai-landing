@@ -24,44 +24,27 @@
             <a href="#" class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md text-lg">Join the Beta for Free</a>
         </section>
         
-        <section class="mt-8 text-center">
-            <h2 class="text-xl font-semibold">How It Works</h2>
-            <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="p-4 bg-white shadow-md rounded-lg">
-                    <h3 class="font-bold">1. Connect Your Fantasy League</h3>
-                    <p class="text-gray-600 mt-2">Sync with ESPN, Yahoo, or Sleeper.</p>
-                </div>
-                <div class="p-4 bg-white shadow-md rounded-lg">
-                    <h3 class="font-bold">2. Get AI Recommendations</h3>
-                    <p class="text-gray-600 mt-2">Draft, waiver, and trade tips in real-time.</p>
-                </div>
-                <div class="p-4 bg-white shadow-md rounded-lg">
-                    <h3 class="font-bold">3. Win Your League</h3>
-                    <p class="text-gray-600 mt-2">Crush your competition with data-driven decisions.</p>
-                </div>
-            </div>
-        </section>
-        
         <section class="mt-8 bg-white shadow-lg rounded-lg p-6 text-center">
             <h2 class="text-2xl font-semibold">Join the Beta Now</h2>
             <p class="mt-2 text-gray-700">Be the first to access our AI-powered insights for fantasy sports.</p>
-            <form id="signup-form" class="mt-4 flex flex-col items-center">
+            <form id="signup-form" class="mt-4 flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
                 <input type="email" name="email" id="email" placeholder="Enter your email" required
                     class="p-3 w-full md:w-2/3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button type="submit" class="mt-4 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 w-full md:w-auto">Sign Up</button>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 w-full md:w-auto">Sign Up</button>
             </form>
-            <p id="success-message" class="hidden mt-4 text-green-600 font-semibold">✅ Thank you for signing up! Redirecting...</p>        </section>
+            <p id="success-message" class="hidden mt-4 text-green-600 font-semibold">✅ Thank you for signing up! Redirecting...</p>
+        </section>
     </main>
     
     <footer class="mt-8 bg-gray-800 text-white text-center py-4">
         <p>&copy; 2025 AI Fantasy Sports | All Rights Reserved</p>
-    </footer> 
+    </footer>
+    
     <script>
         document.getElementById("signup-form").addEventListener("submit", function(event) {
             event.preventDefault(); // Stop default form submission
-        
             let email = document.getElementById("email").value;
-            fetch("/api/zapier-proxy", {  // Send request to your own server function
+            fetch("/api/zapier-proxy", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: email })
@@ -75,6 +58,6 @@
             })
             .catch(error => console.error("Error:", error));
         });
-        </script>
+    </script>
 </body>
 </html>

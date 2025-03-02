@@ -45,17 +45,41 @@
         <section class="mt-8 bg-white shadow-lg rounded-lg p-6 text-center">
             <h2 class="text-2xl font-semibold">Join the Beta Now</h2>
             <p class="mt-2 text-gray-700">Be the first to access our AI-powered insights for fantasy sports.</p>
-            <form action="https://hooks.zapier.com/hooks/catch/21903949/2gvkxko/" method="POST" class="mt-4">
-                <input type="email" name="email" placeholder="Enter your email" required
+            <form id="signup-form" class="mt-4">
+                <input type="email" name="email" id="email" placeholder="Enter your email" required
                     class="p-3 w-2/3 rounded-lg border border-gray-300">
-                <input type="hidden" name="_redirect" value="https://winyourleague-ai.com/thank-you.html">
                 <button type="submit" class="ml-2 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md">Sign Up</button>
             </form>
+            <p id="success-message" class="hidden mt-4 text-green-600 font-semibold">✅ Thank you for signing up! Redirecting...</p>
         </section>
     </main>
     
     <footer class="mt-8 bg-gray-800 text-white text-center py-4">
         <p>&copy; 2025 AI Fantasy Sports | All Rights Reserved</p>
     </footer>
+    <script>
+        document.getElementById("signup-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+        
+            let email = document.getElementById("email").value;
+            fetch("https://hooks.zapier.com/hooks/catch/21903949/2gvkxko/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById("signup-form").classList.add("hidden");
+                    document.getElementById("success-message").classList.remove("hidden");
+                    setTimeout(() => {
+                        window.location.href = "https://winyourleague-ai.com/thank-you.html"; // Redirect to thank-you page
+                    }, 2000);
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+        </script>        
 </body>
 </html>

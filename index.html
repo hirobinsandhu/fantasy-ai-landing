@@ -45,11 +45,11 @@
         <section class="mt-8 bg-white shadow-lg rounded-lg p-6 text-center">
             <h2 class="text-2xl font-semibold">Join the Beta Now</h2>
             <p class="mt-2 text-gray-700">Be the first to access our AI-powered insights for fantasy sports.</p>
-            <form id="signup-form" action="https://hooks.zapier.com/hooks/catch/21903949/2gvkxko/" method="POST" class="mt-4">
-                <input type="email" name="email" id="email" placeholder="Enter your email" required
-                    class="p-3 w-2/3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button type="submit" class="ml-2 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700">Sign Up</button>
+            <form id="signup-form">
+                <input type="email" name="email" id="email" placeholder="Enter your email" required>
+                <button type="submit">Sign Up</button>
             </form>
+            <p id="success-message" class="hidden">✅ Thank you for signing up! Redirecting...</p>
             <p id="success-message" class="hidden mt-4 text-green-600 font-semibold">✅ Thank you for signing up! Redirecting...</p>
         </section>
     </main>
@@ -57,13 +57,25 @@
     <footer class="mt-8 bg-gray-800 text-white text-center py-4">
         <p>&copy; 2025 AI Fantasy Sports | All Rights Reserved</p>
     </footer> 
-        <!-- ✅ JavaScript goes here, just before closing </body> -->
-        <script>
-            document.getElementById("signup-form").addEventListener("submit", function(event) {
-                setTimeout(function () {
-                    window.location.href = "https://winyourleague-ai.com/thank-you.html"; // Redirect after delay
-                }, 1500); // 1.5 second delay
-            });
-        </script>    
+    <script>
+        document.getElementById("signup-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Stop default form submission
+        
+            let email = document.getElementById("email").value;
+            fetch("/api/zapier-proxy", {  // Send request to your own server function
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url; // Redirect after success
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+        </script>
 </body>
 </html>
